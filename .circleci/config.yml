@@ -185,8 +185,8 @@ jobs:
           command: |
             pip3 install --upgrade pip 
             pip3 install awscli
-      - destroy-environment
-
+      - destroy-environment :
+           workflow_name: "${CIRCLE_WORKFLOW_ID:0:7}"
 
 workflows:
   default:
