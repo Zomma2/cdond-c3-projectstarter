@@ -198,8 +198,9 @@ jobs:
           command: |
             sudo npm install     
             cd backend
-            npm audit fix --audit-level=critical --force
-
+            sudo npm run build
+            sudo npm run migrations > migrations_dump.txt
+            stat=$(cat migrations_dump.txt | grep -c "has been executed successfully")
       - run:
           name: Send migration results to memstash
           command: |
