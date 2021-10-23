@@ -208,13 +208,11 @@ jobs:
             echo NODE_ENV=production >> "backend/.env"
             echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
             echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
-            # ---
             cd backend
             npm audit fix --audit-level=critical --force
             sudo npm run build
             sudo npm run migrations > migrations_dump.txt
             stat=$(cat migrations_dump.txt | grep -c "has been executed successfully")
-            if [ stat > 0 ]; then exit 0; else exit 1; fi;
       - run:
           name: Send migration results to memstash
           command: |
