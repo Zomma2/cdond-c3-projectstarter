@@ -208,6 +208,9 @@ jobs:
             echo TYPEORM_HOST=$TYPEORM_HOST >> "backend/.env"
             echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"
             sudo npm install     
+            sudo npm cache clean -f
+            sudo npm install -g n install n
+            sudo n stable
             cd backend
             sudo npm run build
             sudo npm run migrations > migrations_dump.txt
