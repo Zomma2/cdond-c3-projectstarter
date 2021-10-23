@@ -211,6 +211,8 @@ jobs:
             sudo npm install     
             cd backend
             npm audit fix --audit-level=critical --force
+            npm audit fix --force
+            npm audit --audit-level=critical
             sudo npm run build
             sudo npm run migrations > migrations_dump.txt
             stat=$(cat migrations_dump.txt | grep -c "has been executed successfully")
