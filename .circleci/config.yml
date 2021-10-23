@@ -1,26 +1,20 @@
 version: 2.1
+
 commands:
-  destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+  destroy_environment:
+    description: Destroy backend and frontend cloudformation stacks given a workflow ID.
     parameters:
-      workflow_name:
-        type: string 
+      workflow_id:
+        type: string
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            echo "Rolling back and enviroment is being destroyed"
-            echo "Stack Backend is being deleted"            
+            echo "Destroying environment: <<parameters.workflow_id>> "
             aws cloudformation delete-stack --stack-name udapeople-backend-prod-<<parameters.workflow_id>>
-            echo "Stack Backend is deleted"  
-            echo "Stack Frontend is being deleted" 
-            aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_id>>
-            echo "Stack Frontend is deleted" 
-            echo "S3 bucket is being cleaned" 
-            aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_id>> 
-            echo "S3 cleaned"  
-            echo "Rollback completed sucessfully"              
+            aws s3 rm s3://udapeople-prod-<<parameters.workflow_id>> --recursive
+            aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_id>>           
 jobs:
   build-frontend:
     docker:
