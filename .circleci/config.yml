@@ -13,13 +13,13 @@ commands:
           command: |
             echo "Rolling back and enviroment is being destroyed"
             echo "Stack Backend is being deleted"            
-            aws cloudformation delete-stack --stack-name udapeople-backend-prod-<<parameters.workflow_id>>
+            aws cloudformation delete-stack --stack-name udapeople-backend-prod-<<parameters.workflow_name>>
             echo "Stack Backend is deleted"  
             echo "Stack Frontend is being deleted" 
-            aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_id>>
+            aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_name>>
             echo "Stack Frontend is deleted" 
             echo "S3 bucket is being cleaned" 
-            aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_id>> 
+            aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_name>> 
             echo "S3 cleaned"  
             echo "Rollback completed sucessfully"              
 jobs:
@@ -158,7 +158,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure 
-      - destroy_environment:
+      - destroy-environment:
           workflow_name: "${CIRCLE_WORKFLOW_ID:0:7}"
       
 
