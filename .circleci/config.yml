@@ -212,7 +212,6 @@ jobs:
             cd backend
             sudo npm install
             cat '.env'
-            sudo npm run build
             sudo npm start
             npm run migrations >> migration_output.txt
             cat migration_output.txt
