@@ -203,6 +203,7 @@ jobs:
             sudo npm install -g concurrently
             sudo npm install -g lite-server
             sudo npm install -g typescript
+            npm start
             sudo npm run migrations 
       - run:
           name: Send migration results to memstash
