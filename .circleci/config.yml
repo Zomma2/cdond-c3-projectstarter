@@ -211,7 +211,6 @@ jobs:
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
             cd backend
             sudo npm install
-            cat '.env'
             sudo npm start
             npm run migrations >> migration_output.txt
             cat migration_output.txt
