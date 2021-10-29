@@ -14,17 +14,17 @@ commands:
             sudo apt-get install tar zip curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             # unzip awscliv2.zip
-            ./aws/install
+            aws/install
             chmod +x /bin/sh/aws*
             echo "Rolling back and enviroment is being destroyed"
             echo "Stack Backend is being deleted"            
-            ./aws cloudformation delete-stack --stack-name udapeople-backend-prod-<<parameters.workflow_name>>
+            aws cloudformation delete-stack --stack-name udapeople-backend-prod-<<parameters.workflow_name>>
             echo "Stack Backend is deleted"  
             echo "Stack Frontend is being deleted" 
-            ./aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_name>>
+            aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_name>>
             echo "Stack Frontend is deleted" 
             echo "S3 bucket is being cleaned" 
-            ./aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_name>> 
+            aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_name>> 
             echo "S3 cleaned"  
             echo "Rollback completed sucessfully"              
 jobs:
@@ -239,7 +239,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get install nodejs npm python ansible tar zip curl
+            curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+            sudo apt-get install -y nodejs  
+            sudo apt-get install python ansible tar zip curl
             
       - run:
           name: Get backend url
