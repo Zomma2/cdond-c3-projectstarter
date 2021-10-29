@@ -14,16 +14,17 @@ commands:
             apk add --update tar zip curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             # unzip awscliv2.zip
-            sudo ./aws/install
+            ./aws/install
+            chmod +x /bin/sh/aws*
             echo "Rolling back and enviroment is being destroyed"
             echo "Stack Backend is being deleted"            
-            aws cloudformation delete-stack --stack-name udapeople-backend-prod-<<parameters.workflow_name>>
+            ./aws cloudformation delete-stack --stack-name udapeople-backend-prod-<<parameters.workflow_name>>
             echo "Stack Backend is deleted"  
             echo "Stack Frontend is being deleted" 
-            aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_name>>
+            ./aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_name>>
             echo "Stack Frontend is deleted" 
             echo "S3 bucket is being cleaned" 
-            aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_name>> 
+            ./aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_name>> 
             echo "S3 cleaned"  
             echo "Rollback completed sucessfully"              
 jobs:
@@ -242,6 +243,7 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             ./aws/install
+            chmod +x /bin/sh/aws*
             
       - run:
           name: Get backend url
