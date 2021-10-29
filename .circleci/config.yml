@@ -231,7 +231,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - attach_workspace:
@@ -240,15 +240,11 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update nodejs npm python ansible tar zip curl
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            ./aws/install
-            chmod +x /bin/sh/aws*
             
       - run:
           name: Get backend url
           command: |
-            BACKEND_IP =$(./aws ec2 describe-instances \
+            BACKEND_IP =$(aws ec2 describe-instances \
               --filters "Name=tag:Name,Values=backend-prod-${CIRCLE_WORKFLOW_ID:0:7}" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
@@ -261,7 +257,7 @@ jobs:
             npm install
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-            ./aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment :
            workflow_name: "${CIRCLE_WORKFLOW_ID:0:7}"
 
