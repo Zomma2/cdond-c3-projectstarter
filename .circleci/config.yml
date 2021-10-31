@@ -21,7 +21,7 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_name>>
             echo "Stack Frontend is deleted" 
             echo "S3 bucket is being cleaned" 
-            aws s3 rm --recursive s3://udapeople-prod-<<parameters.workflow_name>> 
+            aws s3 rm --recursive s3://udapeople-$<<parameters.workflow_name>> 
             echo "S3 cleaned"  
             echo "Rollback completed sucessfully"              
 jobs:
