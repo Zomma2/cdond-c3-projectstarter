@@ -21,7 +21,7 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-frontend-prod-<<parameters.workflow_name>>
             echo "Stack Frontend is deleted" 
             echo "S3 bucket is being cleaned" 
-            aws s3 rm --recursive s3://udapeople-$<<parameters.workflow_name>> 
+            aws s3 rm --recursive s3://udapeople-kk1j287dhjlpsz4172
             echo "S3 cleaned"  
             echo "Rollback completed sucessfully"              
 jobs:
@@ -255,8 +255,8 @@ jobs:
             npm install
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-            aws s3 cp --recursive dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} 
-            aws s3 cp --recursive dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} 
+            aws s3 cp --recursive dist s3://udapeople-kk1j287dhjlpsz4172
+            aws s3 cp --recursive dist s3://udapeople-kk1j287dhjlpsz4172
       - destroy-environment :
            workflow_name: "${CIRCLE_WORKFLOW_ID:0:7}"
 
