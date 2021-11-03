@@ -1,0 +1,20 @@
+---
+- name: Update apt
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Install node
+  become: yes
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
+
+- name: "Install pm2"
+  become: yes
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: latest

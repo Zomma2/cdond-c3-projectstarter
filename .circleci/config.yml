@@ -260,6 +260,33 @@ jobs:
       - destroy-environment :
            workflow_name: "${CIRCLE_WORKFLOW_ID:0:7}"
 
+  deploy-backend:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["e6:77:4a:4b:f8:f3:ee:a1:c4:7b:2a:0a:fa:b9:36:d4"]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get install tar gzip ansible nodejs npm
+      - run:
+          name: Deploy backend
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            tar -C backend -czvf artifact.tar.gz .
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
+      - destroy-environment :
+           workflow_name: "${CIRCLE_WORKFLOW_ID:0:7}"
 workflows:
   default:
     jobs:
@@ -285,3 +312,5 @@ workflows:
           requires : [configure-infrastructure] 
       - deploy-frontend :
           requires : [run-migrations]
+      - deploy-backend : 
+          requires : [deploy-frontend]      
