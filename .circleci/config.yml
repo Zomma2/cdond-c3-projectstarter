@@ -319,7 +319,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible nodejs npm tar gzip ansible 
+            apk add --update ansible nodejs npm tar gzip ansible curl
             apk add --no-cache \
             python3 \
             py3-pip \
@@ -336,7 +336,8 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            export API_URL="http://$BACKEND_IP:3030"
+            echo "$BACKEND_IP"
+            API_URL="http://"$BACKEND_IP":3030"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
