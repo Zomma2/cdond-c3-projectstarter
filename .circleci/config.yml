@@ -381,7 +381,6 @@ jobs:
           command: |
             yum -y install python tar zip curl
             yum -y install awscli
-            pip3 install --upgrade pip 
 
             
       - run:
