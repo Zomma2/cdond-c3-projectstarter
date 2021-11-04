@@ -11,8 +11,8 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            apt-get install tar zip curl
-            apt-get install awscli
+            apk add --update tar zip curl
+            apk add --update awscli
             echo "Rolling back and enviroment is being destroyed"
             echo "Stack Backend is being deleted"            
             aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflow_name>>
@@ -359,7 +359,7 @@ jobs:
             then
             return 1
             else
-            return 0
+            return 1
             fi
 
       - destroy-environment :
