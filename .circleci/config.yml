@@ -24,6 +24,26 @@ commands:
             aws s3 rm --recursive s3://udapeople-kk1j287dhjlpsz4172
             echo "S3 cleaned"  
             echo "Rollback completed sucessfully"              
+  
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      workflow_id:
+        type: string
+    steps:
+      - run:
+          name: Revert migrations
+          when: on_fail
+          command: |
+            SUCCESS=$(curl -H "token: << pipeline.parameters.memstash-token >>" --request GET https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID})
+            if(( $SUCCESS==1 )); 
+            then
+              cd ~/project/backend
+              npm install
+              npm run migrations:revert
+            fi
+
+
 jobs:
   build-frontend:
     docker:
@@ -154,6 +174,8 @@ jobs:
               --output text)
             echo "[all]" >> .circleci/ansible/inventory.txt
             echo "$BACKEND_AWS_PUBLIC_IP" >> .circleci/ansible/inventory.txt
+            touch .circleci/ansible/IP.txt
+            echo "$BACKEND_AWS_PUBLIC_IP" >> .circleci/ansible/IP.txt
       - run: yum -y install tar gzip
       - persist_to_workspace:
           root: ~/
@@ -311,7 +333,9 @@ jobs:
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
-            echo BACKEND_IP
+            cat .circleci/ansible/IP.txt
+            echo "$BACKEND_IP"
+            echo $BACKEND_IP
       - run:
           name: Backend smoke test.
           command: |
