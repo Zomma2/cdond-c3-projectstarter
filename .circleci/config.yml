@@ -332,7 +332,6 @@ jobs:
           command: |
             cat .circleci/ansible/inventory.txt
             BACKEND_IP=$(sed -n 3p .circleci/ansible/inventory.txt)
-            cat .circleci/ansible/IP.txt
             echo "$BACKEND_IP"
             echo $BACKEND_IP
       - run:
