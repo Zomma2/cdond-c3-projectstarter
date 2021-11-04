@@ -379,10 +379,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl
-            apk add --update py3-pip 
+            sudo apt-get install python ansible tar zip curl
+            sudo apt-get install awscli
             pip3 install --upgrade pip 
-            pip3 install awscli
+
             
       - run:
           name: Update cloudfront distribution
