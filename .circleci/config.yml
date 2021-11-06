@@ -284,7 +284,7 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp --recursive dist s3://udapeople-kk1j287dhjlpsz4172
-            aws s3 cp --recursive dist s3://udapeople-kk1j287dhjlpsz4172
+            
       - destroy-environment :
            workflow_name: "${CIRCLE_WORKFLOW_ID:0:7}"
 
@@ -384,6 +384,7 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
+            aws s3 cp --recursive s3://udapeople-kk1j287dhjlpsz4172 s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack \
@@ -455,3 +456,5 @@ workflows:
           requires : [deploy-backend]
       - cloudfront-update :
           requires : [smoke-test]
+      - cleanup : 
+          requires : [cloudfront-update]      
