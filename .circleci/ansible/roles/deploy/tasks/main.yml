@@ -3,7 +3,7 @@
   become: true
   copy:
     src: /root/project/backend
-    dest: /home/ubuntu
+    dest: /home/ubuntu/
     
 - name: "Directory Creation"
   file:
