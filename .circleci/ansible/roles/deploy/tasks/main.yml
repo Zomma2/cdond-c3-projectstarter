@@ -1,17 +1,28 @@
-- name: Copy files
+- name: "Directory Creation"
+  file:
+    path: /home/ubuntu/backend
+    state: directory
+    
+- name: "Get files"
   become: true
   copy:
-    src: /home/backend.tar.gz
-    dest: /home/ubuntu/backend.tar.gz
+    src: /root/project/backend
+    dest: /home/ubuntu
 
-- name: Start PM2
+- name: "Npm install"
   shell: |
-    cd /home/ubuntu/
-    tar xzvf backend.tar.gz
-    mv home/circleci/project/backend .
-    cd backend
-    sudo npm install -g npm@latest
-    sudo npm install -g webpack-dev-server
-    sudo npm install
-    sudo npm run build
-    sudo pm2 start npm --name backend -- start
+    cd /home/ubuntu/backend   
+    ls -la 
+    npm install
+    
+- name: "build npm"
+  become: true
+  shell: |
+    cd /home/ubuntu/backend
+    npm run build
+- name: "run server"
+  become: true
+  shell: |
+    cd /home/ubuntu/backend
+    pm2 start npm -- run "start:dev"
+    pm2 ls
