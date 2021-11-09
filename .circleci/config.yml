@@ -210,7 +210,7 @@ jobs:
           command: |
             cd .circleci/ansible
             cat inventory.txt
-            yes YES | ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i inventory.txt configure-server.yml
           environment:
             ANSIBLE_HOST_KEY_CHECKING: false
       - run:
