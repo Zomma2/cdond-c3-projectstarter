@@ -1,14 +1,15 @@
-- name: "Directory Creation"
-  file:
-    path: /home/ubuntu/backend
-    state: directory
-    
+---
 - name: "Get files"
   become: true
   copy:
     src: /root/project/backend
     dest: /home/ubuntu
     
+- name: "Directory Creation"
+  file:
+    path: /home/ubuntu/backend
+    state: directory
+  
 - name: "Npm install"
   shell: |
     cd /home/ubuntu/backend   
