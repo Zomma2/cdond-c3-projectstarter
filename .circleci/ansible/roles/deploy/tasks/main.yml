@@ -9,8 +9,10 @@
   shell: |
     cd /home/ubuntu/
     tar xzvf artifact.tar.gz
-    mv home/circleci/project/backend .
-    
+    ls
+    mv /root/project/backend .
+    ls
+
   
 - name: "Npm install"
   shell: |
