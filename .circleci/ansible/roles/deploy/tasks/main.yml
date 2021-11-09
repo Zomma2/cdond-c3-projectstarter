@@ -8,7 +8,7 @@
   copy:
     src: /root/project/backend
     dest: /home/ubuntu
-
+    
 - name: "Npm install"
   shell: |
     cd /home/ubuntu/backend   

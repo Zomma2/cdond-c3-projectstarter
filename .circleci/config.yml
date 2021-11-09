@@ -308,6 +308,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
+            pwd
             echo NODE_ENV=production >> "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
             echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
