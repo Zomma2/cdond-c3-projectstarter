@@ -18,3 +18,8 @@
     global: yes
     production: yes
     state: latest
+
+- name: Update apt
+  become: yes
+  apt:
+    update_cache: yes
