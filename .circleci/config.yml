@@ -307,6 +307,7 @@ jobs:
             apk add --update ansible nodejs npm tar gzip ansible 
       - run:
           name: Deploy backend
+          no_output_timeout: 40m
           command: |
             pwd
             echo NODE_ENV=production >> "backend/.env"

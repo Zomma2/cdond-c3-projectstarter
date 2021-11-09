@@ -1,7 +1,7 @@
 ---
 - name: "Get files"
   become: true
-  synchronize:
+  copy:
     src: /root/project/backend
     dest: /home/ubuntu/
     
