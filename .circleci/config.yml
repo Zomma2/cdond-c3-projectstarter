@@ -277,7 +277,7 @@ jobs:
           name: Get backend url
           command: |
             cat .circleci/ansible/inventory.txt
-            BACKEND_IP=$(sed -n 3p .circleci/ansible/inventory.txt)
+            BACKEND_IP=$(sed -n 2p .circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             echo ENVIRONMENT=production > "frontend/.env"
@@ -358,13 +358,13 @@ jobs:
           name: Get backend url
           command: |
             cat .circleci/ansible/inventory.txt
-            export BACKEND_IP=$(sed -n 3p .circleci/ansible/inventory.txt)
+            export BACKEND_IP=$(sed -n 2p .circleci/ansible/inventory.txt)
             echo "$BACKEND_IP"
       - run:
           name: Backend smoke test.
           command: |
             echo "$BACKEND_IP"
-            export BACKEND_IP=$(sed -n 3p .circleci/ansible/inventory.txt)
+            export BACKEND_IP=$(sed -n 2p .circleci/ansible/inventory.txt)
             echo "$BACKEND_IP"
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
