@@ -209,8 +209,6 @@ jobs:
           command: |
             cd .circleci/ansible
             yes YES | ansible-playbook -i inventory.txt configure-server.yml
-          environment:
-            ANSIBLE_HOST_KEY_CHECKING: false
       - run:
           name: Install AWS CLI for rollback
           when: on_fail
